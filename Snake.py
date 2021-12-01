@@ -37,6 +37,7 @@ while True:
     tall = 3
     snak = []
     died = False
+    mode = "hard"
     while True:
         sc.fill(GRAY)
         press = False
@@ -58,6 +59,12 @@ while True:
                     press = True
                 if event.key == pygame.K_r:
                     reload = True
+                if event.key == pygame.K_1:
+                    mode = "hard"
+                if event.key == pygame.K_2:
+                    mode = "easy"
+                if event.key == pygame.K_e:
+                    apple = True
         for i in range(len(snake)):
             for j in range(len(snake[i])):
                 if snake[i][j] == "x":
@@ -72,42 +79,92 @@ while True:
             if snake[e][ee] == "o":
                 snake[e][ee] = "a"
                 apple = False
-        if dvizh == 1:
-            if (gk - 1) == -1 or snake[gk - 1][gp] == "z":
-                died = True
-            if not died and snake[gk - 1][gp] == "a":
-                tall += 1
-                apple = True
-            if not died:
-                snake[gk - 1][gp] = "x"
-                snake[gk][gp] = "z"
-        if dvizh == 2:
-            if (gp + 1) == 20 or snake[gk][gp + 1] == "z":
-                died = True
-            if not died and snake[gk][gp + 1] == "a":
-                tall += 1
-                apple = True
-            if not died:
-                snake[gk][gp + 1] = "x"
-                snake[gk][gp] = "z"
-        if dvizh == 3:
-            if (gk + 1) == 20 or snake[gk + 1][gp] == "z":
-                died = True
-            if not died and snake[gk + 1][gp] == "a":
-                tall += 1
-                apple = True
-            if not died:
-                snake[gk + 1][gp] = "x"
-                snake[gk][gp] = "z"
-        if dvizh == 4:
-            if (gp - 1) == -1 or snake[gk][gp - 1] == "z":
-                died = True
-            if not died and snake[gk][gp - 1] == "a":
-                tall += 1
-                apple = True
-            if not died:
-                snake[gk][gp - 1] = "x"
-                snake[gk][gp] = "z"
+        if mode == "hard":
+            if dvizh == 1:
+                if (gk - 1) == -1 or snake[gk - 1][gp] == "z":
+                    died = True
+                if not died and snake[gk - 1][gp] == "a":
+                    tall += 1
+                    apple = True
+                if not died:
+                    snake[gk - 1][gp] = "x"
+                    snake[gk][gp] = "z"
+            if dvizh == 2:
+                if (gp + 1) == 20 or snake[gk][gp + 1] == "z":
+                    died = True
+                if not died and snake[gk][gp + 1] == "a":
+                    tall += 1
+                    apple = True
+                if not died:
+                    snake[gk][gp + 1] = "x"
+                    snake[gk][gp] = "z"
+            if dvizh == 3:
+                if (gk + 1) == 20 or snake[gk + 1][gp] == "z":
+                    died = True
+                if not died and snake[gk + 1][gp] == "a":
+                    tall += 1
+                    apple = True
+                if not died:
+                    snake[gk + 1][gp] = "x"
+                    snake[gk][gp] = "z"
+            if dvizh == 4:
+                if (gp - 1) == -1 or snake[gk][gp - 1] == "z":
+                    died = True
+                if not died and snake[gk][gp - 1] == "a":
+                    tall += 1
+                    apple = True
+                if not died:
+                    snake[gk][gp - 1] = "x"
+                    snake[gk][gp] = "z"
+        if mode == "easy":
+            if dvizh == 1:
+                if snake[gk - 1][gp] == "z":
+                    died = True
+                if not died and snake[gk - 1][gp] == "a":
+                    tall += 1
+                    apple = True
+                if (gk - 1) == -1:
+                    snake[19][gp] = "x"
+                    snake[gk][gp] = "z"
+                elif not died:
+                    snake[gk - 1][gp] = "x"
+                    snake[gk][gp] = "z"
+            if dvizh == 2:
+                if not (gp + 1) == 20 and snake[gk][gp + 1] == "z":
+                    died = True
+                if not (gp + 1) == 20 and not died and snake[gk][gp + 1] == "a":
+                    tall += 1
+                    apple = True
+                if (gp + 1) == 20:
+                    snake[gk][0] = "x"
+                    snake[gk][gp] = "z"
+                elif not died:
+                    snake[gk][gp + 1] = "x"
+                    snake[gk][gp] = "z"
+            if dvizh == 3:
+                if not (gk + 1) == 20 and snake[gk + 1][gp] == "z":
+                    died = True
+                if not (gk + 1) == 20 and not died and snake[gk + 1][gp] == "a":
+                    tall += 1
+                    apple = True
+                if (gk + 1) == 20:
+                    snake[0][gp] = "x"
+                    snake[gk][gp] = "z"
+                elif not died:
+                    snake[gk + 1][gp] = "x"
+                    snake[gk][gp] = "z"
+            if dvizh == 4:
+                if not (gp - 1) == -1 and snake[gk][gp - 1] == "z":
+                    died = True
+                if not (gp - 1) == -1 and not died and snake[gk][gp - 1] == "a":
+                    tall += 1
+                    apple = True
+                if (gp - 1) == -1:
+                    snake[gk][19] = "x"
+                    snake[gk][gp] = "z"
+                elif not died:
+                    snake[gk][gp - 1] = "x"
+                    snake[gk][gp] = "z"
         if len(snak) > tall:
             snak.remove(snak[0])
         if len(snak) == tall:
@@ -117,12 +174,12 @@ while True:
         printsnake("a", RED)
         if died:
             sc.fill(GRAY)
-            fontObj = pygame.font.Font('freesansbold.ttf', 40)
+            fontObj = pygame.font.Font(None, 40)
             textSurfaceObj = fontObj.render('You score is: ' + str(tall), True, LIGHTGRAY, GRAY)
             textRectObj = textSurfaceObj.get_rect()
             textRectObj.center = (240, 240)
             sc.blit(textSurfaceObj, textRectObj)
-            fontObj = pygame.font.Font('freesansbold.ttf', 20)
+            fontObj = pygame.font.Font(None, 20)
             textSurfaceObj = fontObj.render('Press "R" to reload', True, LIGHTGRAY, GRAY)
             textRectObj = textSurfaceObj.get_rect()
             textRectObj.center = (240, 280)
